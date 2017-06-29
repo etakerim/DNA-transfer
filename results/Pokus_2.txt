@@ -1,0 +1,13 @@
+DNA1: CATCCTTCGCGC
+
+DNA2: GTAGGAAGCGCG
+
+mRNA: GUAGGAAGCGCG
+
+tRNA: CAUCCUUCGCGC
+
+Amino: VGSA
+
+Valin, Glycin, Serin, Alanin, 
+
+SMILES: (NC(C(=O)(NCC(=O)(NC(C(=O)(NC(C)C(=O)O))CO)))C(C)C)

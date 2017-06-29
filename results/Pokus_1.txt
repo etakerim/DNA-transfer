@@ -1,0 +1,13 @@
+DNA1: AAACTGCCCTGT
+
+DNA2: TTTGACGGGACA
+
+mRNA: UUUGACGGGACA
+
+tRNA: AAACUGCCCUGU
+
+Amino: FDGT
+
+Fenylalanin, Kyselina asparagova, Glycin, Treonin, 
+
+SMILES: (NC(C(=O)(NC(C(=O)(NCC(=O)(NC(C(=O)O)C(O)C)))CC(=O)O))Cc1ccccc1)

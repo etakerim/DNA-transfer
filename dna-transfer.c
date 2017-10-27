@@ -1,19 +1,19 @@
 /*
  * Popis: Zaujmova uloha z biologie - replikacia, translacia a trankripcia
  * retazca DNA. Zahrna prepis z DNA na protikus, mRNA, tRNA a v subore
- * vyhlada nazvy aminokyselin v retazci. Vstupy normalizuje tak, aby 
+ * vyhlada nazvy aminokyselin v retazci. Vstupy normalizuje tak, aby
  * bol pocet pismen delitelny tromi (geneticky kod je v tripletoch).
  *
  * Autor: Miroslav Hajek
  * Škola: Gymnazium, Hubeneho 23 - sexta 2016/2017
  * Licencia: GNU GPLv2.1
  * Prezentované: 31.3.2017
- * Úprava:       27.6.2017 
- * (Tabuľky aminokyselín a polypeptídové väzby cez SMILES 
+ * Úprava:       27.6.2017
+ * (Tabuľky aminokyselín a polypeptídové väzby cez SMILES
  *  AVOGADRO softvér = zobrazenie 3D modelu)
  */
 
-/* SMILES sú upravené pre ľahké peptídové naviazanie, tj. N je vpredu 
+/* SMILES sú upravené pre ľahké peptídové naviazanie, tj. N je vpredu
  * R-COOH + H2N-R, -> R-CO-NH-R, */
 
 #include <ctype.h>
@@ -30,7 +30,7 @@
 static const struct {
     char id;
     char *chemnazov;
-    char *smiles;    
+    char *smiles;
 } aminokyseliny[] = {
     {'A', "Alanin"              ,"NC(C)C(=O)O"         },
     {'B', "STOP"                ,""                    },
@@ -63,21 +63,21 @@ static const struct {
     char *kodon;
     char id;
 } triplety[POCET_TRIPL] = {
-    {"AAA", 'K'}, {"AAC", 'N'}, {"AAG", 'K'}, {"AAU", 'N'}, 
-    {"ACA", 'T'}, {"ACC", 'T'}, {"ACG", 'T'}, {"ACU", 'T'}, 
-    {"AGA", 'R'}, {"AGC", 'S'}, {"AGG", 'R'}, {"AGU", 'S'}, 
-    {"AUA", 'I'}, {"AUC", 'I'}, {"AUG", 'M'}, {"AUU", 'I'}, 
-    {"CAA", 'Q'}, {"CAC", 'H'}, {"CAG", 'Q'}, {"CAU", 'H'}, 
-    {"CCA", 'P'}, {"CCC", 'P'}, {"CCG", 'P'}, {"CCU", 'P'}, 
-    {"CGA", 'R'}, {"CGC", 'R'}, {"CGG", 'R'}, {"CGU", 'R'}, 
-    {"CUA", 'L'}, {"CUC", 'L'}, {"CUG", 'L'}, {"CUU", 'L'}, 
-    {"GAA", 'E'}, {"GAC", 'D'}, {"GAG", 'E'}, {"GAU", 'D'}, 
-    {"GCA", 'A'}, {"GCC", 'A'}, {"GCG", 'A'}, {"GCU", 'A'}, 
-    {"GGA", 'G'}, {"GGC", 'G'}, {"GGG", 'G'}, {"GGU", 'G'}, 
-    {"GUA", 'V'}, {"GUC", 'V'}, {"GUG", 'V'}, {"GUU", 'V'}, 
-    {"UAA", ' '}, {"UAC", 'Y'}, {"UAG", ' '}, {"UAU", 'Y'}, 
-    {"UCA", 'S'}, {"UCC", 'S'}, {"UCG", 'S'}, {"UCU", 'S'}, 
-    {"UGA", ' '}, {"UGC", 'C'}, {"UGG", 'W'}, {"UGU", 'C'}, 
+    {"AAA", 'K'}, {"AAC", 'N'}, {"AAG", 'K'}, {"AAU", 'N'},
+    {"ACA", 'T'}, {"ACC", 'T'}, {"ACG", 'T'}, {"ACU", 'T'},
+    {"AGA", 'R'}, {"AGC", 'S'}, {"AGG", 'R'}, {"AGU", 'S'},
+    {"AUA", 'I'}, {"AUC", 'I'}, {"AUG", 'M'}, {"AUU", 'I'},
+    {"CAA", 'Q'}, {"CAC", 'H'}, {"CAG", 'Q'}, {"CAU", 'H'},
+    {"CCA", 'P'}, {"CCC", 'P'}, {"CCG", 'P'}, {"CCU", 'P'},
+    {"CGA", 'R'}, {"CGC", 'R'}, {"CGG", 'R'}, {"CGU", 'R'},
+    {"CUA", 'L'}, {"CUC", 'L'}, {"CUG", 'L'}, {"CUU", 'L'},
+    {"GAA", 'E'}, {"GAC", 'D'}, {"GAG", 'E'}, {"GAU", 'D'},
+    {"GCA", 'A'}, {"GCC", 'A'}, {"GCG", 'A'}, {"GCU", 'A'},
+    {"GGA", 'G'}, {"GGC", 'G'}, {"GGG", 'G'}, {"GGU", 'G'},
+    {"GUA", 'V'}, {"GUC", 'V'}, {"GUG", 'V'}, {"GUU", 'V'},
+    {"UAA", ' '}, {"UAC", 'Y'}, {"UAG", ' '}, {"UAU", 'Y'},
+    {"UCA", 'S'}, {"UCC", 'S'}, {"UCG", 'S'}, {"UCU", 'S'},
+    {"UGA", ' '}, {"UGC", 'C'}, {"UGG", 'W'}, {"UGU", 'C'},
     {"UUA", 'L'}, {"UUC", 'F'}, {"UUG", 'L'}, {"UUU", 'F'}
 };
 
@@ -88,8 +88,8 @@ typedef struct {
 
 void user_wait(void)
 {
-    printf("\nStlacte ENTER na ukoncenie...\n"); 
-    getchar();   
+    printf("\nStlacte ENTER na ukoncenie...\n");
+    getchar();
 }
 
 String string_constalloc(size_t len)
@@ -104,7 +104,7 @@ String string_constalloc(size_t len)
     }
     str.len = len;
     str.d[str.len] = '\0';
-    
+
     return str;
 }
 
@@ -121,7 +121,7 @@ String readline(FILE *fr)
             allocsz *= 1.5;
             line.d = realloc(line.d, allocsz);
         }
-    } 
+    }
 
     line.d[index] = '\0';
     line.len = index;
@@ -143,7 +143,7 @@ String readtxtfile(void)
     String cesta = readline(stdin);
     FILE *subor = fopen(cesta.d, "r");
 
-    if (subor == NULL) { 
+    if (subor == NULL) {
         free(cesta.d);
         perror("Chyba pri otvarani suboru");
         user_wait();
@@ -163,13 +163,13 @@ FILE *subor_zapis_volny(char *prefix, char *sufix)
     int cnt = 0;
     FILE *fr = NULL;
 
-    do { 
-        if (fr != NULL) 
+    do {
+        if (fr != NULL)
             fclose(fr);
-        snprintf(filename, sizeof(filename), "%s%d.%s", prefix, cnt++, sufix);  
+        snprintf(filename, sizeof(filename), "%s%d.%s", prefix, cnt++, sufix);
         fr = fopen(filename, "r");
     } while (fr != NULL);
-    
+
     return fopen(filename, "w");
 }
 
@@ -182,10 +182,10 @@ char najdi_doplnok(char baza, bool je_dna)
         case 'G': return 'C';
         case 'T': return 'A';
         case 'U': return 'A';
-        case 'A': 
-            if (je_dna) 
+        case 'A':
+            if (je_dna)
                 return 'T';
-            else 
+            else
                 return 'U';
         default:
             return '\0';
@@ -194,7 +194,7 @@ char najdi_doplnok(char baza, bool je_dna)
 
 void dna_skrat_podieltri(String *retazec)
 {
-    while (retazec->len % TROJICA != 0) 
+    while (retazec->len % TROJICA != 0)
         retazec->len--;
     retazec->d[retazec->len] = '\0';
 }
@@ -202,9 +202,9 @@ void dna_skrat_podieltri(String *retazec)
 int dna_skontroluj(String retazec)
 {
     unsigned int i;
-  
+
     dna_skrat_podieltri(&retazec);
-    for (i = 0; i < retazec.len; i++) 
+    for (i = 0; i < retazec.len; i++)
         if (najdi_doplnok(retazec.d[i], true) == '\0')
             return i + 1;
 
@@ -217,7 +217,7 @@ String dna_generovat(unsigned int dnadlzka)
     int rndpos;
     static const char nukleotidy[] = {'A', 'T', 'G', 'C'};
     String dna_retazec = string_constalloc(dnadlzka);
-    
+
     dna_skrat_podieltri(&dna_retazec);
     srand(time(NULL));
     for (i = 0; i < dna_retazec.len; i++) {
@@ -240,7 +240,7 @@ String dna_replikacia(String zdroj, bool je_dna)
     return ciel;
 }
 
-unsigned int hash_ohodnot(char znak, unsigned int index) 
+unsigned int hash_ohodnot(char znak, unsigned int index)
 {
     const unsigned int faktor[] = {16, 4, 1};
     unsigned int cena;
@@ -267,7 +267,7 @@ int idamino_to_index(char id)
         user_wait();
         exit(2);
     }
-    return (id != STOP) ? id - 'A':  1; 
+    return (id != STOP) ? id - 'A':  1;
 }
 
 String aminokys_retazec(String mRna)
@@ -281,15 +281,15 @@ String aminokys_retazec(String mRna)
         index = 0;
         memset(kodon, 0, sizeof(kodon));
         strncpy(kodon, mRna.d + i, TROJICA);
-        if (kodon[0] == '\0') 
+        if (kodon[0] == '\0')
             break;
-        
-        // Nájdi kodón v abecedne zoradenej tabuľke 
-        for (j = 0; j < TROJICA; j++)   
+
+        // Nájdi kodón v abecedne zoradenej tabuľke
+        for (j = 0; j < TROJICA; j++)
             index += hash_ohodnot(kodon[j], j);
 
         // Pridaj symbol do výsledného reťazca
-        amino.d[ia++] = triplety[index].id;   
+        amino.d[ia++] = triplety[index].id;
     }
 
     return amino;
@@ -308,14 +308,14 @@ void aminokys_nazvy(FILE *fw, String poly)
 
 
 // Pri cykloch v SMILES inkrementovať počítanie
-static const char *SMILES_cykly(char *amino) 
+static const char *SMILES_cykly(char *amino)
 {
     static int inc = 1;
     static char curr[64];
     char tmp[64];
     char num[32];
     bool jecyklus = false;
-    int i, j, k, t; 
+    int i, j, k, t;
     int len = strlen(amino);
 
     strncpy(tmp, amino, sizeof(tmp));
@@ -324,26 +324,26 @@ static const char *SMILES_cykly(char *amino)
             t = (tmp[i] == '1') ? inc : inc + 1;
             jecyklus = true;
 
-            if (inc < 10) 
+            if (inc < 10)
                 snprintf(num, sizeof(num), "%d", t);
-            else 
+            else
                 snprintf(num, sizeof(num), "%%%d", t);
-            for (k = 0; num[k] != '\0'; k++) 
+            for (k = 0; num[k] != '\0'; k++)
                 curr[j++] = num[k];
-            
+
         } else {
             curr[j++] = tmp[i];
         }
     }
 
-    if (jecyklus) 
+    if (jecyklus)
         inc++;
     return curr;
 }
 
-void SMILES_polypeptid(FILE *dst, String polypeptid) 
+void SMILES_polypeptid(FILE *dst, String polypeptid)
 {
-    /* Skladaj SMILES: Nájdi karboxylovú skupinu C(=O)O 
+    /* Skladaj SMILES: Nájdi karboxylovú skupinu C(=O)O
                        Vymeň O za (<aminokyselina>)
         zvysokprev = ""
         cyklus:
@@ -353,7 +353,7 @@ void SMILES_polypeptid(FILE *dst, String polypeptid)
              zvysokprev = smiles[i:]
          print zvysok
     */
-    #define BUF_LEN     1024 
+    #define BUF_LEN     1024
     int i, pos;
     char amino[BUF_LEN] = {};
     char zvysok[BUF_LEN] = {};
@@ -364,11 +364,11 @@ void SMILES_polypeptid(FILE *dst, String polypeptid)
         pos = idamino_to_index(polypeptid.d[i]);
 
         memset(amino, 0, sizeof(amino));
-        snprintf(amino, sizeof(amino), 
-                "(%s)%s", SMILES_cykly(aminokyseliny[pos].smiles), zvysok + 1); 
+        snprintf(amino, sizeof(amino),
+                "(%s)%s", SMILES_cykly(aminokyseliny[pos].smiles), zvysok + 1);
 
-        karboxylO = strstr(amino, "C(=O)O"); 
-        if (karboxylO != NULL) { 
+        karboxylO = strstr(amino, "C(=O)O");
+        if (karboxylO != NULL) {
             karboxylO += 5;
             memset(ulozit, 0, sizeof(ulozit));
             strncpy(ulozit, amino, karboxylO - amino);
@@ -388,13 +388,13 @@ void SMILES_subor(String polypeptid, char *prefix)
 
     if (polypeptid.len > 333) {
         fprintf(stderr, ("SMILES Nebude generovany!: pocet"
-                        "prvkov proteinu je %d z max. povolenych 333\n"), polypeptid.len);	
+                        "prvkov proteinu je %d z max. povolenych 333\n"), polypeptid.len);
         return;
     }
 
     fsmile = subor_zapis_volny(prefix, "smiles");
     if (fsmile != NULL) {
-        SMILES_polypeptid(fsmile, polypeptid); 
+        SMILES_polypeptid(fsmile, polypeptid);
         fclose(fsmile);
     }
 }
@@ -403,7 +403,7 @@ void SMILES_subor(String polypeptid, char *prefix)
 int main(void)
 {
     int vyber;
-    unsigned int dlzkadna; 
+    unsigned int dlzkadna;
     String dna;
     String dna2retazec;
     String m_rna;
@@ -425,7 +425,7 @@ int main(void)
     switch (vyber) {
         case 1:
             printf("Zadajte pocet dusikatych baz: ");
-            dlzkadna = readnumber(stdin);   
+            dlzkadna = readnumber(stdin);
             dna = dna_generovat(dlzkadna);
             break;
         case 2:
@@ -442,7 +442,7 @@ int main(void)
             aminokys_nazvy(stdout, polypeptid);
             SMILES_subor(polypeptid, "bielkovina");
             user_wait();
-            exit(0);           
+            exit(0);
         default:
             puts("Neplatny vyber");
             user_wait();
@@ -455,20 +455,20 @@ int main(void)
         exit(3);
     }
 
-    // Vytvor reťazce DNA2, mRNA, tRNA, aminokyseliny 
+    // Vytvor reťazce DNA2, mRNA, tRNA, aminokyseliny
     dna2retazec = dna_replikacia(dna, true);
     m_rna = dna_replikacia(dna, false);
     t_rna = dna_replikacia(m_rna, false);
-    polypeptid = aminokys_retazec(m_rna);  
- 
+    polypeptid = aminokys_retazec(m_rna);
+
     printf("DNA1: %s\n\n", dna.d);
     printf("DNA2: %s\n\n", dna2retazec.d);
     printf("mRNA: %s\n\n", m_rna.d);
     printf("tRNA: %s\n\n", t_rna.d);
     printf("Amino: %s\n\n", polypeptid.d);
-    
 
-    // Vypíš výsledky 
+
+    // Vypíš výsledky
     fw = subor_zapis_volny("Pokus", "txt");
     if (fw != NULL) {
         fprintf(fw, "DNA1: %s\n\n", dna.d);
@@ -486,6 +486,6 @@ int main(void)
     free(dna2retazec.d);
     free(m_rna.d);
     free(t_rna.d);
-    
+
     user_wait();
-} 
+}

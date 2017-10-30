@@ -65,6 +65,7 @@ bazy = {
     'T': 'Tymín'
 }
 
+
 def najdi_doplnok(baza, repl=False):
     ''' Vráti komplementárny pár k platnej dusíkatej báze 'baza'.
     Ak sa jedná o replikáciu je potrebné zadat vlajku 'repl'.'''
@@ -77,7 +78,7 @@ def najdi_doplnok(baza, repl=False):
     elif baza == 'T' or baza == 'U':
         return 'A'
     elif baza == 'A':
-        if replikacia:
+        if repl:
             return 'T'
         else:
             return 'U'
@@ -90,7 +91,7 @@ def dna_replikacia(zdroj, repl=False):
     'najdi_doplnok' '''
     ciel = ''
     for b in zdroj:
-        ciel += najdi_doplnok(b, je_dna)
+        ciel += najdi_doplnok(b, repl)
     return ciel
 
 
@@ -98,10 +99,10 @@ def dna_generovat(nbaz):
     ''' Generuje DNA sekvenciu pozostávajúcu zo zadaného počtu
     dusíkatých báz 'nbaz'. Ak nie je počet tripletový zabezpečí to.'''
     nukleotidy = ['A', 'T', 'G', 'C']
-    dna_dlzka -= dna_dlzka % 3
+    nbaz -= nbaz % 3
     dna = ''
 
-    for i in range(n_baz):
+    for i in range(nbaz):
         dna += random.choice(nukleotidy)
 
     return dna
@@ -155,8 +156,8 @@ def smiles_cykly(pocitadlo, ak):
 
 
 def smiles_vypis(polypeptid):
-    '''Skladá SMILES všetkých AK z polypeptidového reťazca
-    dokopy. Nájde karboxylovú skupinu C(=O)O  a vymení  O za (<aminokyselina>) '''
+    '''Skladá SMILES všetkých AK z polypeptidového reťazca dokopy.
+    Nájde karboxylovú skupinu C(=O)Oa vymení  O za (<aminokyselina>) '''
     inc = 1
     zvysok = ''
     smiles = ''

@@ -14,8 +14,8 @@ class GentikApp(ttk.Frame):
         self.root = root
         self.zobraz = []
 
-        root.title('Genetika')
-        root.minsize(600, 250)
+        root.title('Genetik')
+        root.minsize(600, 280)
         root.config(menu=self.menu_creator())
         root.rowconfigure(0, weight=1)
         root.columnconfigure(0, weight=1)

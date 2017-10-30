@@ -34,27 +34,27 @@ triplety = {
 }
 
 aminokyseliny = {
-    'A': ('Alanin'              ,'NC(C)C(=O)O'         ),
+    'A': ('Alanín'              ,'NC(C)C(=O)O'         ),
     ' ': ('STOP'                ,''                    ),
-    'C': ('Cystein'             ,'NC(C(=O)O)CS'        ),
-    'D': ('Kyselina asparagova' ,'NC(C(=O)O)CC(=O)O'   ),
-    'E': ('Kyselina glutamova'  ,'NC(C(=O)O)CCC(=O)O'  ),
-    'F': ('Fenylalanin'         ,'NC(C(=O)O)Cc1ccccc1' ),
-    'G': ('Glycin'              ,'NCC(=O)O'            ),
-    'H': ('Histidin'            ,'NC(C(=O)O)CC1=CN=CN1'),
-    'I': ('Izoleucin'           ,'NC(C(=O)O)C(C)CC'    ),
-    'K': ('Lyzin'               ,'N(C(=O)O)CCCCN'      ),
-    'L': ('Leucin'              ,'NC(C(=O)O)CC(C)C'    ),
-    'M': ('Metionin'            ,'NC(C(=O)O)CCSC'      ),
-    'N': ('Asparagin'           ,'NC(=O)CC(N)C(=O)O'   ),
-    'P': ('Prolin'              ,'N1CCCC1C(=O)O'       ),
-    'Q': ('Glutamin'            ,'NC(=O)CCC(N)C(=O)O'  ),
-    'R': ('Arginin'             ,'NC(CCCNC(N)=N)C(=O)O'),
-    'S': ('Serin'               ,'NC(C(=O)O)CO'        ),
-    'T': ('Treonin'             ,'NC(C(=O)O)C(O)C'     ),
-    'V': ('Valin'               ,'NC(C(=O)O)C(C)C'     ),
-    'W': ('Tryptofan'      ,'NC(C(=O)O)CC1=CNc2ccccc12'),
-    'Y': ('Tyrozin'           ,'NC(Cc1ccc(O)cc1)C(=O)O')
+    'C': ('Cysteín'             ,'NC(C(=O)O)CS'        ),
+    'D': ('Kyselina asparágová' ,'NC(C(=O)O)CC(=O)O'   ),
+    'E': ('Kyselina glutámová'  ,'NC(C(=O)O)CCC(=O)O'  ),
+    'F': ('Fenylalanín'         ,'NC(C(=O)O)Cc1ccccc1' ),
+    'G': ('Glycín'              ,'NCC(=O)O'            ),
+    'H': ('Histidín'            ,'NC(C(=O)O)CC1=CN=CN1'),
+    'I': ('Izoleucín'           ,'NC(C(=O)O)C(C)CC'    ),
+    'K': ('Lyzín'               ,'N(C(=O)O)CCCCN'      ),
+    'L': ('Leucín'              ,'NC(C(=O)O)CC(C)C'    ),
+    'M': ('Metionín'            ,'NC(C(=O)O)CCSC'      ),
+    'N': ('Asparagín'           ,'NC(=O)CC(N)C(=O)O'   ),
+    'P': ('Prolín'              ,'N1CCCC1C(=O)O'       ),
+    'Q': ('Glutamín'            ,'NC(=O)CCC(N)C(=O)O'  ),
+    'R': ('Arginín'             ,'NC(CCCNC(N)=N)C(=O)O'),
+    'S': ('Serín'               ,'NC(C(=O)O)CO'        ),
+    'T': ('Treonín'             ,'NC(C(=O)O)C(O)C'     ),
+    'V': ('Valín'               ,'NC(C(=O)O)C(C)C'     ),
+    'W': ('Tryptofán'      ,'NC(C(=O)O)CC1=CNc2ccccc12'),
+    'Y': ('Tyrozín'           ,'NC(Cc1ccc(O)cc1)C(=O)O')
 }
 
 bazy = {

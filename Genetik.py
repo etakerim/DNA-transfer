@@ -94,29 +94,39 @@ class GentikApp(ttk.Frame):
         self.in_lbl.grid(row=0, column=0)
         self.in_entry.grid(row=0, column=1, columnspan=4, pady=10, sticky="we")
 
-        self.check_dna2.grid(row=1, column=1)
-        self.check_mrna.grid(row=1, column=2)
-        self.check_trna.grid(row=1, column=3)
-        self.check_ak.grid(row=1, column=4)
+        self.check_dna2.grid(row=1, column=1, sticky="n")
+        self.check_mrna.grid(row=1, column=2, sticky="n")
+        self.check_trna.grid(row=1, column=3, sticky="n")
+        self.check_ak.grid(row=1, column=4, sticky="n")
         self.btn_go.grid(row=2, column=2, columnspan=2, sticky="we", pady=10)
 
         self.pocet_lbl.grid(row=0, column=6, sticky="w")
         self.num_gen.grid(row=0, column=7, sticky="we")
-        self.bazy_chck.grid(row=1, column=6, sticky="we")
-        self.trip_chck.grid(row=1, column=7, sticky="we")
+        self.bazy_chck.grid(row=1, column=6, sticky="wen")
+        self.trip_chck.grid(row=1, column=7, sticky="wen")
         self.btn_gen.grid(row=2, column=6,  columnspan=2, sticky="we")
 
-        self.result_lab.grid(row=3, column=0)
-        self.result.grid(row=3, column=1, columnspan=8)
-        self.resulthand.grid(row=4, column=1, columnspan=8, sticky="we")
-        self.point.grid(row=7, column=2, columnspan=3, sticky="w")
+        self.result_lab.grid(row=3, column=0, sticky="s")
+        self.result.grid(row=3, column=1, columnspan=8, sticky="wes")
+        self.resulthand.grid(row=4, column=1, columnspan=8, sticky="wen")
+        self.point.grid(row=5, column=2, columnspan=3, sticky="w")
+
+        self.columnconfigure(0, weight=1, pad=5)
+        for i in range(1, 6):
+            self.columnconfigure(i, weight=3)
+        for i in range(6, 8):
+            self.columnconfigure(i, weight=2)
+        self.rowconfigure(3, weight=3)
+        self.rowconfigure(4, weight=3)
 
     def sekv_generator(self):
         try:
             n = int(self.elemcnt.get())
             if self.su_tripl.get():
                 n *= 3
-            self.dna.set(gen.dna_generovat(n))
+            dna_nova = gen.dna_generovat(n)
+            self.elemcnt.set(len(dna_nova))
+            self.dna.set(dna_nova)
         except:
             pass
 
@@ -196,4 +206,4 @@ class GentikApp(ttk.Frame):
 if __name__ == '__main__':
     root = tk.Tk()
     app = GentikApp(root)
-    app.mainloop()
+    root.mainloop()

@@ -158,20 +158,18 @@ def smiles_cykly(pocitadlo, ak):
     return (pocitadlo, ak_nova)
 
 
-def smiles_vypis(polypeptid):
+def smiles_vypis(subor, polypeptid):
     '''Skladá SMILES všetkých AK z polypeptidového reťazca dokopy.
     Nájde karboxylovú skupinu C(=O)Oa vymení  O za (<aminokyselina>) '''
     inc = 1
     zvysok = ''
-    smiles = ''
 
     for ak in polypeptid:
         inc, ak_nova = smiles_cykly(inc, ak)
         amino = '({}){}'.format(ak_nova, zvysok[1:])
 
         karboxylO = amino.find("C(=O)O") + len("C(=O)O")
-        smiles += amino[:karboxylO - 1]
+        subor.write(amino[:karboxylO - 1])
         zvysok = amino[karboxylO:]
 
-    smiles += zvysok
-    return smiles
+    subor.write(zvysok)

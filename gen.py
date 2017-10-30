@@ -1,23 +1,16 @@
-# Popis:
-# Záujmova úloha z biológie - replikácia, translácia a trankripcia
-# reťazca DNA. Zahŕňa prepis z DNA na protikus, mRNA, tRNA a priraďi
-# triplety k názvom aminokyselín v reťazci. Vstupy normalizuje tak, aby
-# bol počet písmen deliteľný tromi (geneticky kód je v tripletoch).
-#
-# Autor: Miroslav Hájek
-# Škola: Gymnázium, Hubeného 23 - sexta (2016/17), septima (2017/18)
-# Licencia: GNU GPLv2.1
-#
-# C-čková verzia programu ------------
-# Prezentované: 31.3.2017, Úprava: 27.6.2017
-# (Tabuľky aminokyselín a polypeptídové väzby cez SMILES
-#  AVOGADRO softvér = zobrazenie 3D modelu)
-#
-# Python verzia -------
-# Prepisovanie dokončené: 27.10.2017
-#
-# SMILES sú upravené pre ľahké peptídové naviazanie, tj. N je vpredu
-# R-COOH + H2N-R, -> R-CO-NH-R,
+"""
+Modul gen.py obsahuje tabuľky priradení tripletov na aminokyselinu
+a aminokyselín na ich názvy. Funkcie na generovanie, replikáciu,
+transláciu a transkripciu DNA na všetky ostatné formy DNA2, mRNA, tRNA.
+Podpora formátu .dna (čistá sekvencia) a vytváranie .smiles (.smi)
+
+
+Vytvorené ako záujmova úloha z biológie.
+Autor: Miroslav Hájek
+Škola: Gymnázium, Hubeného 23
+Trieda: sexta, septima (2016-18)
+Licencia: GNU LGPLv2.1
+"""
 import random
 
 
@@ -40,7 +33,6 @@ triplety = {
     'UUA': 'L', 'UUC': 'F', 'UUG': 'L', 'UUU': 'F'
 }
 
-# Grafické prostredie zvýrazní platné časti dna
 aminokyseliny = {
     'A': ('Alanin'              ,'NC(C)C(=O)O'         ),
     ' ': ('STOP'                ,''                    ),
@@ -73,7 +65,9 @@ bazy = {
     'T': 'Tymín'
 }
 
-def najdi_doplnok(baza, je_dna):
+def najdi_doplnok(baza, repl=False):
+    ''' Vráti komplementárny pár k platnej dusíkatej báze 'baza'.
+    Ak sa jedná o replikáciu je potrebné zadat vlajku 'repl'.'''
     baza = baza.upper()
 
     if baza == 'C':
@@ -83,7 +77,7 @@ def najdi_doplnok(baza, je_dna):
     elif baza == 'T' or baza == 'U':
         return 'A'
     elif baza == 'A':
-        if je_dna:
+        if replikacia:
             return 'T'
         else:
             return 'U'
@@ -91,25 +85,31 @@ def najdi_doplnok(baza, je_dna):
         return ''
 
 
-def dna_replikacia(zdroj, je_dna):
+def dna_replikacia(zdroj, repl=False):
+    '''Vytvorí prepis pre celý retazec dna/rna 'zdroj' s využitím
+    'najdi_doplnok' '''
     ciel = ''
     for b in zdroj:
         ciel += najdi_doplnok(b, je_dna)
     return ciel
 
 
-def dna_generovat(dna_dlzka):
+def dna_generovat(nbaz):
+    ''' Generuje DNA sekvenciu pozostávajúcu zo zadaného počtu
+    dusíkatých báz 'nbaz'. Ak nie je počet tripletový zabezpečí to.'''
     nukleotidy = ['A', 'T', 'G', 'C']
     dna_dlzka -= dna_dlzka % 3
     dna = ''
 
-    for i in range(dna_dlzka):
+    for i in range(n_baz):
         dna += random.choice(nukleotidy)
 
     return dna
 
 
 def dna_skontroluj(dna):
+    '''Skontroluje platné triplety dna sekvencie. Pokiaľ je nesprávna
+    vráti neplatné miesto počnúc od 1. 0 znamená ok sekvenciu '''
     dna = dna[:len(dna) - (len(dna) % 3)]
     for i, b in enumerate(dna):
         if najdi_doplnok(b, True):
@@ -118,6 +118,7 @@ def dna_skontroluj(dna):
 
 
 def aminokys_retazec(mRna):
+    '''Z platného reťazca mRNA vytvorí reťazec značiek aminokyselín'''
     amino = ''
     for start in range(0, len(mRna), 3):
         kodon = mRna[start:start+3]
@@ -131,8 +132,9 @@ def aminokys_nazvy(poly):
         yield aminokyseliny[t][0]
 
 
-# smiles cykly - prečísluj vzory podľa ich získanej pozície
 def smiles_cykly(pocitadlo, ak):
+    '''Prečísluje cykly v tabuľkových SMILES podľa
+    ich získanej pozície v reťazci'''
     ak_nova = ''
     je_cyklus = False
     for c in aminokyseliny[ak][1]:
@@ -152,9 +154,9 @@ def smiles_cykly(pocitadlo, ak):
     return (pocitadlo, ak_nova)
 
 
-# Skladaj SMILES: Nájdi karboxylovú skupinu C(=O)O
-#                 Vymeň O za (<aminokyselina>)
 def smiles_vypis(polypeptid):
+    '''Skladá SMILES všetkých AK z polypeptidového reťazca
+    dokopy. Nájde karboxylovú skupinu C(=O)O  a vymení  O za (<aminokyselina>) '''
     inc = 1
     zvysok = ''
     smiles = ''

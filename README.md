@@ -10,10 +10,10 @@ You can generate random DNA sequence of specified length (will be adjusted
 for triplets) or input your own string either on line or from file. There is also 
 ability to process protein string to SMILES chemical representation.
 
-###Language
+### Language
 - Slovak (only)
 
-###Screenshot
+### Screenshot
 ![alt text](results/screenshot.png?raw=true "In a full glory")
 
 

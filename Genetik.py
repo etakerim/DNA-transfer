@@ -44,7 +44,10 @@ class GentikApp(ttk.Frame):
         self.su_tripl = tk.BooleanVar()
 
         self.in_lbl = ttk.Label(self, text='DNA vstup')
-        self.in_entry = ttk.Entry(self, width=50, textvariable=self.dna)
+
+        s = ttk.Style()
+        s.configure('Error.TEntry', foreground='red')
+        self.in_entry = ttk.Entry(self, width=50, style='TEntry', textvariable=self.dna)
         self.btn_go = ttk.Button(self, text='Prepíš', command=self.sekv_prepis)
 
         self.pocet_lbl = ttk.Label(self, text='Počet')
@@ -160,11 +163,16 @@ class GentikApp(ttk.Frame):
                 ak_pad += '-{}-'.format(p)
         return ak_pad
 
+
     def sekv_prepis(self):
+        dna = self.dna.get()
+        if gen.dna_skontroluj(dna) > 0:
+            self.in_entry['style'] = 'Error.TEntry'
+            return
+
+        self.in_entry['style'] = 'TEntry'
         self.result_lab.delete(0, tk.END)
         self.result.delete(0, tk.END)
-
-        dna = self.dna.get()
         m_rna = gen.dna_replikacia(dna)
 
         self.zobraz = [('DNA-A', dna)]

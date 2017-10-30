@@ -1,12 +1,23 @@
-# DNA transfer
-Biology class experimental homework of making tidious rewrites and lookups automatic.
-Through "intuitive" command line user interface you can generate random DNA sequence
-of specified length (adjusted for triplets) or input your own string either
-on line or from file. There is also ability to process protein string to
-SMILES chemical representation:
+# Genetik
+Originaly created as an experimental homework from Biology class with a goal 
+of making tidious rewrites of DNA sequence automatic. "Intuitive" command line 
+user interface was first developed in C language (still available in legacy/) 
+then ported to Python.
+This step enabled to create GUI with tkinter -> Genetik.py
+
+### Features
+You can generate random DNA sequence of specified length (will be adjusted 
+for triplets) or input your own string either on line or from file. There is also 
+ability to process protein string to SMILES chemical representation.
+
+###Language
+- Slovak (only)
+
+###Screenshot
+![alt text](results/screenshot.png?raw=true "In a full glory")
 
 
-### Sample execution
+### Command line - Sample execution
 
 ```bash
 ---- DNA Program ---- 
@@ -32,15 +43,14 @@ Stlacte ENTER na ukoncenie...
 ```
 
 
-### Generated files
-After each "experiment" two files will be generated in place of executable:
-- Pokus.txt         -> Save generated data from command line 
-- protein.smiles    -> SMILES string of protein (Maybe you have to strip leading
-                       and trailing paranthesis, but it is valid)
-
 ### Build and Run
+Instructions for python version will be posted shortly.
+For now: 
+```bash
+python3 Genetik.py 
+```
+
 As simple as compilation can be:
 ```bash
 gcc dna-transfer.c -o program
 ```
-

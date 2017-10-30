@@ -109,11 +109,13 @@ def dna_generovat(nbaz):
 
 
 def dna_skontroluj(dna):
-    '''Skontroluje platné triplety dna sekvencie. Pokiaľ je nesprávna
+    '''Skontroluje dna sekvenciu. Pokiaľ je nesprávna
     vráti neplatné miesto počnúc od 1. 0 znamená ok sekvenciu '''
-    dna = dna[:len(dna) - (len(dna) % 3)]
+    if len(dna) % 3 != 0:
+       return 1
+
     for i, b in enumerate(dna):
-        if najdi_doplnok(b, True):
+        if not najdi_doplnok(b, True):
             return i + 1
     return 0
 
@@ -123,7 +125,8 @@ def aminokys_retazec(mRna):
     amino = ''
     for start in range(0, len(mRna), 3):
         kodon = mRna[start:start+3]
-        amino += triplety[kodon]
+        if len(kodon) == 3:
+            amino += triplety[kodon]
 
     return amino
 

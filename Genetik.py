@@ -127,6 +127,7 @@ class GentikApp(ttk.Frame):
             dna_nova = gen.dna_generovat(n)
             self.elemcnt.set(len(dna_nova))
             self.dna.set(dna_nova)
+            self.in_entry['style'] = 'TEntry'
         except:
             pass
 
@@ -162,7 +163,7 @@ class GentikApp(ttk.Frame):
                 popis = gen.aminokyseliny[s[index]][0]
             else:
                 popis = gen.bazy[s[index]]
-        self.point['text'] = 'Látka: {} ({})'.format(popis, s[index])
+            self.point['text'] = 'Látka: {} ({})'.format(popis, s[index])
 
     def ak_padding(self, ak):
         ak_pad = ''

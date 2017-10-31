@@ -1,56 +1,47 @@
 # Genetik
+Python Tkinter application for demostration of DNA replication, translation
+and transcription to RNA and then to Amino acid chain.
+
+### About  
 Originaly created as an experimental homework from Biology class with a goal 
 of making tidious rewrites of DNA sequence automatic. "Intuitive" command line 
 user interface was first developed in C language (still available in legacy/) 
-then ported to Python.
-This step enabled to create GUI with tkinter -> Genetik.py
-
-### Features
-You can generate random DNA sequence of specified length (will be adjusted 
-for triplets) or input your own string either on line or from file. There is also 
-ability to process protein string to SMILES chemical representation.
-
-### Language
-- Slovak (only)
+then ported to Python. This step enabled to create GUI with tkinter -> Genetik.py
 
 ### Screenshot
-![alt text](results/screenshot.png?raw=true "In a full glory")
+![alt text](results/screenshot.png?raw=true "Genetik app")
 
 
-### Command line - Sample execution
+### Features
+- Input your own DNA sequence (A, T, C, G) from within app or from file
+- Generate random DNA of specified length
+- Export whole "experiment" to file and amino acids to .smiles
+- Basic information about meaning of characters
 
+
+### Installation
+Prerequisites: git, python3
 ```bash
----- DNA Program ---- 
-[1]  Nahodna generacia
-[2]  Zadat vlastny retazec
-[3]  Zadat cestu suboru
-[4]  Polypeptid skratene
-Zadajte vas vyber (1 - 4): 1
-
-Zadajte pocet dusikatych baz: 9
-DNA1: CTCCATCTC
-
-DNA2: GAGGTAGAG
-
-mRNA: GAGGUAGAG
-
-tRNA: CUCCAUCUC
-
-Amino: EVE
-
-
-Stlacte ENTER na ukoncenie...
+$ git clone https://github.com/etakerim/Genetik
+$ cd Genetik/Genetik-app
+$ python Genetik.py 
 ```
 
-
-### Build and Run
-Instructions for python version will be posted shortly.
-For now: 
+If you wish to run old command line version
 ```bash
-python3 Genetik.py 
+$ cd Genetik/legacy
+$ gcc dna-transfer.c -o genetik
+$ ./genetik
 ```
+To distibute it to others consider using `pyinstall`.
 
-As simple as compilation can be:
-```bash
-gcc dna-transfer.c -o program
-```
+### How to help?
+Basic motivation was to create something that could demonstrate use
+of IT in Biology, especially in Genetics. After this first draft
+it would be nice if we could make app more captive for students.
+If you feel like you want to help, here are some things to get you
+started:
+- Translations (English, German, ...)
+- Better graphical style
+- Grafical info about chemicals in DNA and in Amino Acids
+- Mendel laws of inheritance

@@ -20,20 +20,29 @@ then ported to Python. This step enabled to create GUI with tkinter -> Genetik.p
 
 
 ### Installation
-Prerequisites: git, python3
+Prerequisites: git, python3, pip3
+
+##### Developer build for Users
+To distibute it to others consider using `pyinstaller`.
+```bash
+$ cd Genetik/Genetik-app
+$ pip install pyinstaller
+$ pyinstaller -w -i genetik.ico -F Genetik.py
+# pyinstaller --noconsole --onefile -i <icon=genetik.ico> <app=Genetik.py>
+```
+
+##### Development
 ```bash
 $ git clone https://github.com/etakerim/Genetik
 $ cd Genetik/Genetik-app
 $ python Genetik.py 
 ```
-
 If you wish to run old command line version
 ```bash
 $ cd Genetik/legacy
 $ gcc dna-transfer.c -o genetik
 $ ./genetik
 ```
-To distibute it to others consider using `pyinstall`.
 
 ### How to help?
 Basic motivation was to create something that could demonstrate use

@@ -48,7 +48,8 @@ class GentikApp(ttk.Frame):
         s = ttk.Style()
         s.configure('Error.TEntry', foreground='red')
         self.in_entry = ttk.Entry(self, width=50, style='TEntry', textvariable=self.dna)
-        self.btn_go = ttk.Button(self, text='Prepíš', command=self.sekv_prepis)
+        self.btn_del = ttk.Button(self, text='Vymazať pokus', command=self.vymaz_pokus)
+        self.btn_go = ttk.Button(self, text='Prepíš DNA', command=self.sekv_prepis)
 
         self.pocet_lbl = ttk.Label(self, text='Počet')
         self.num_gen = ttk.Entry(self, width=10, textvariable=self.elemcnt)
@@ -98,7 +99,8 @@ class GentikApp(ttk.Frame):
         self.check_mrna.grid(row=1, column=2, sticky="n")
         self.check_trna.grid(row=1, column=3, sticky="n")
         self.check_ak.grid(row=1, column=4, sticky="n")
-        self.btn_go.grid(row=2, column=2, columnspan=2, sticky="we", pady=10)
+        self.btn_del.grid(row=2, column=1, columnspan=2)
+        self.btn_go.grid(row=2, column=3, columnspan=2, sticky="we", pady=10)
 
         self.pocet_lbl.grid(row=0, column=6, sticky="w")
         self.num_gen.grid(row=0, column=7, sticky="we")
@@ -130,6 +132,11 @@ class GentikApp(ttk.Frame):
             self.in_entry['style'] = 'TEntry'
         except:
             pass
+
+    def vymaz_pokus(self):
+        self.dna.set('')
+        self.result_lab.delete(0, tk.END)
+        self.result.delete(0, tk.END)
 
     def nacitaj_subor(self):
         nazov = filedialog.askopenfilename()

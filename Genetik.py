@@ -93,25 +93,25 @@ class GentikApp(ttk.Frame):
 
     def geometry_manage(self):
         self.in_lbl.grid(row=0, column=0)
-        self.in_entry.grid(row=0, column=1, columnspan=4, pady=10, sticky="we")
+        self.in_entry.grid(row=0, column=1, columnspan=4, pady=10, sticky='we')
 
-        self.check_dna2.grid(row=1, column=1, sticky="n")
-        self.check_mrna.grid(row=1, column=2, sticky="n")
-        self.check_trna.grid(row=1, column=3, sticky="n")
-        self.check_ak.grid(row=1, column=4, sticky="n")
+        self.check_dna2.grid(row=1, column=1, sticky='n')
+        self.check_mrna.grid(row=1, column=2, sticky='n')
+        self.check_trna.grid(row=1, column=3, sticky='n')
+        self.check_ak.grid(row=1, column=4, sticky='n')
         self.btn_del.grid(row=2, column=1, columnspan=2)
-        self.btn_go.grid(row=2, column=3, columnspan=2, sticky="we", pady=10)
+        self.btn_go.grid(row=2, column=3, columnspan=2, sticky='we', pady=10)
 
-        self.pocet_lbl.grid(row=0, column=6, sticky="w")
-        self.num_gen.grid(row=0, column=7, sticky="we")
-        self.bazy_chck.grid(row=1, column=6, sticky="wen")
-        self.trip_chck.grid(row=1, column=7, sticky="wen")
-        self.btn_gen.grid(row=2, column=6,  columnspan=2, sticky="we")
+        self.pocet_lbl.grid(row=0, column=6, sticky='w')
+        self.num_gen.grid(row=0, column=7, sticky='we')
+        self.bazy_chck.grid(row=1, column=6, sticky='wen')
+        self.trip_chck.grid(row=1, column=7, sticky='wen')
+        self.btn_gen.grid(row=2, column=6,  columnspan=2, sticky='we')
 
-        self.result_lab.grid(row=3, column=0, sticky="s")
-        self.result.grid(row=3, column=1, columnspan=8, sticky="wes")
-        self.resulthand.grid(row=4, column=1, columnspan=8, sticky="wen")
-        self.point.grid(row=5, column=2, columnspan=3, sticky="w")
+        self.result_lab.grid(row=3, column=0, sticky='s')
+        self.result.grid(row=3, column=1, columnspan=8, sticky='wes')
+        self.resulthand.grid(row=4, column=1, columnspan=8, sticky='wen')
+        self.point.grid(row=5, column=2, columnspan=3, sticky='w')
 
         self.columnconfigure(0, weight=1, pad=5)
         for i in range(1, 6):
